@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Қосымша 2: Ағылшын тілі сөздік қорын анықтау (Қорытынды тест)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        indigo: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen pb-12">
+
+    <!-- Header / Nav -->
+    <header class="bg-indigo-700 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white/10 p-2 rounded-lg">
+                    <i class="fa-solid fa-graduation-cap text-2xl text-indigo-200"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold leading-tight">Қосымша 2. Қорытынды тест</h1>
+                    <p class="text-xs text-indigo-200">5-сынып оқушыларының сөздік қорын анықтау</p>
+                </div>
+            </div>
+            
+            <!-- Mode Switcher Tabs -->
+            <div class="flex bg-indigo-900/50 p-1 rounded-xl border border-indigo-500/30">
+                <button id="tab-test" onclick="switchTab('test')" class="px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 bg-white text-indigo-900 shadow">
+                    <i class="fa-solid fa-pen-to-square"></i> Тест тапсыру
+                </button>
+                <button id="tab-dashboard" onclick="switchTab('dashboard')" class="px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 text-indigo-100 hover:text-white">
+                    <i class="fa-solid fa-chart-column"></i> Нәтижелер кестесі
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 mt-8">
+
+        <!-- VIEW 1: STUDENT TEST SECTION -->
+        <section id="view-test" class="space-y-6">
+            
+            <!-- Research Details Header Box -->
+            <div class="bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-100 rounded-2xl p-6 shadow-sm">
+                <div class="flex items-start gap-4">
+                    <div class="hidden sm:flex bg-indigo-600 text-white p-3 rounded-xl shadow-md text-xl">
+                        <i class="fa-solid fa-flask"></i>
+                    </div>
+                    <div class="space-y-2 flex-1">
+                        <div class="inline-block px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-semibold rounded-full uppercase tracking-wider">
+                            Педагогикалық эксперимент
+                        </div>
+                        <h2 class="text-lg md:text-xl font-bold text-slate-800 leading-snug">
+                            Зерттеу тақырыбы: «Күн сайын 10 ағылшын сөзін жаттау арқылы оқушылардың сөздік қорын дамытудың тиімділігі»
+                        </h2>
+                        <p class="text-sm text-slate-600">
+                            <span class="font-semibold text-slate-700">Мақсаты:</span> 30 күндік тәжірибеден кейін 5-сынып оқушыларының ағылшын тіліндегі сөздік қорының өзгерісін анықтау.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Student Metadata Form -->
+            <form id="quiz-form" onsubmit="event.preventDefault(); submitQuiz();" class="space-y-8">
+                
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+                    <h3 class="text-md font-bold text-slate-700 border-b pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-user-gear text-indigo-600"></i> Оқушы туралы мәлімет
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-semibold text-slate-500 mb-1">Оқушының аты-жөні *</label>
+                            <input type="text" id="student-name" required placeholder="Мысалы: Асанәлі Ахметов" 
+                                class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 mb-1">Сыныбы *</label>
+                            <input type="text" id="student-class" required placeholder="5 «А»" 
+                                class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 mb-1">Күні</label>
+                            <input type="date" id="test-date" 
+                                class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-sm bg-slate-50">
+                        </div>
+                    </div>
+
+                    <!-- Group Selection -->
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 mb-2">Зерттеу тобын таңдаңыз *</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label class="flex items-center gap-3 p-3 border rounded-xl cursor-pointer transition-all hover:border-indigo-300 bg-white group-has-[:checked]:border-indigo-600 group-has-[:checked]:bg-indigo-50/50">
+                                <input type="radio" name="student-group" value="Эксперименттік топ" required class="text-indigo-600 focus:ring-indigo-500">
+                                <div>
+                                    <span class="block text-sm font-semibold text-slate-800">Эксперименттік топ</span>
+                                    <span class="block text-xs text-slate-500">Күн сайын 10 сөз жаттау әдісі қолданылды</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 border rounded-xl cursor-pointer transition-all hover:border-indigo-300 bg-white group-has-[:checked]:border-indigo-600 group-has-[:checked]:bg-indigo-50/50">
+                                <input type="radio" name="student-group" value="Бақылау тобы" required class="text-indigo-600 focus:ring-indigo-500">
+                                <div>
+                                    <span class="block text-sm font-semibold text-slate-800">Бақылау тобы</span>
+                                    <span class="block text-xs text-slate-500">Дәстүрлі оқыту бағдарламасы бойынша</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Instructions Card -->
+                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-900 flex items-start gap-3">
+                        <i class="fa-solid fa-circle-info text-amber-600 text-lg mt-0.5"></i>
+                        <div>
+                            <p class="font-bold mb-0.5">Нұсқаулық:</p>
+                            <p>Барлық тапсырманы өз бетіңізше орындаңыз. Тест 30 тапсырмадан тұрады (Максималды нәтиже – 30 балл). Әр дұрыс жауапқа – 1 балл. Ағылшынша сөздің жанындағы <i class="fa-solid fa-volume-high text-indigo-600"></i> батырмасын басып сөздің айтылуын тыңдай аласыз.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Task 1 Section -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+                    <div class="flex justify-between items-center border-b pb-3">
+                        <h3 class="text-base font-bold text-slate-800">
+                            1-тапсырма. Ағылшын сөздерін қазақ тіліне аудар
+                        </h3>
+                        <span class="px-2.5 py-1 bg-indigo-100 text-indigo-700 text-xs font-semibold rounded-full">10 ұпай</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="task1-container">
+                        <!-- JS populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Task 2 Section -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+                    <div class="flex justify-between items-center border-b pb-3">
+                        <h3 class="text-base font-bold text-slate-800">
+                            2-тапсырма. Дұрыс аударманы таңда
+                        </h3>
+                        <span class="px-2.5 py-1 bg-indigo-100 text-indigo-700 text-xs font-semibold rounded-full">10 ұпай</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="task2-container">
+                        <!-- JS populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Task 3 Section -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+                    <div class="flex justify-between items-center border-b pb-3">
+                        <div>
+                            <h3 class="text-base font-bold text-slate-800">
+                                3-тапсырма. Сөздерді ағылшын тіліне аудар және сөйлем жаз
+                            </h3>
+                            <p class="text-xs text-slate-500">Сөзді ағылшынша жазып, сол сөзді қатыстырып сөйлем құрастырыңыз.</p>
+                        </div>
+                        <span class="px-2.5 py-1 bg-indigo-100 text-indigo-700 text-xs font-semibold rounded-full">10 балл</span>
+                    </div>
+
+                    <div class="space-y-4" id="task3-container">
+                        <!-- JS populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-base rounded-2xl shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-paper-plane"></i> Тестті аяқтау және нәтижені жіберу
+                </button>
+            </form>
+
+            <!-- Result Modal / Card -->
+            <div id="result-modal" class="hidden bg-white border border-indigo-200 rounded-2xl p-6 shadow-xl space-y-6 animate-fade-in">
+                <div class="text-center space-y-2 border-b pb-4">
+                    <div id="result-badge" class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 text-3xl mb-2">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-800" id="result-title">Тест аяқталды!</h3>
+                    <p class="text-slate-600 text-sm" id="result-subtitle">Оқушының қорытынды нәтижесі дайын</p>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                    <div class="p-3 bg-slate-50 rounded-xl border">
+                        <span class="block text-xs text-slate-500 font-medium">1-тапсырма</span>
+                        <span class="text-lg font-bold text-slate-700" id="res-t1">0 / 10</span>
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-xl border">
+                        <span class="block text-xs text-slate-500 font-medium">2-тапсырма</span>
+                        <span class="text-lg font-bold text-slate-700" id="res-t2">0 / 10</span>
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-xl border">
+                        <span class="block text-xs text-slate-500 font-medium">3-тапсырма</span>
+                        <span class="text-lg font-bold text-slate-700" id="res-t3">0 / 10</span>
+                    </div>
+                    <div class="p-3 bg-indigo-50 border border-indigo-200 rounded-xl">
+                        <span class="block text-xs text-indigo-600 font-semibold">Жалпы балл</span>
+                        <span class="text-xl font-black text-indigo-700" id="res-total">0 / 30</span>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-semibold text-slate-600">Меңгеру деңгейі:</span>
+                        <span id="res-level-tag" class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">Жоғары</span>
+                    </div>
+                    <p class="text-xs text-slate-600" id="res-description">
+                        Оқушының сөздік қоры жақсы қалыптасқан.
+                    </p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                    <button onclick="resetTest()" class="flex-1 py-2.5 border border-slate-300 text-slate-700 font-medium text-sm rounded-xl hover:bg-slate-50 transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-rotate-left"></i> Қайта тапсыру
+                    </button>
+                    <button onclick="switchTab('dashboard')" class="flex-1 py-2.5 bg-indigo-600 text-white font-medium text-sm rounded-xl hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-list-check"></i> Жалпы кестені қарау
+                    </button>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- VIEW 2: TEACHER DASHBOARD -->
+        <section id="view-dashboard" class="hidden space-y-6">
+            
+            <!-- Dashboard Overview Banner -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-clipboard-list text-indigo-600"></i> Нәтижені тіркеу кестесі
+                        </h2>
+                        <p class="text-xs text-slate-500 mt-1">Эксперименттік және бақылау топтарының сөздік қорды дамыту қорытындылары</p>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-2">
+                        <button onclick="addSampleData()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5">
+                            <i class="fa-solid fa-vial"></i> Үлгі деректерді жүктеу
+                        </button>
+                        <button onclick="exportCSV()" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 shadow-sm">
+                            <i class="fa-solid fa-file-excel"></i> Excel (CSV) экспорттау
+                        </button>
+                        <button onclick="clearResults()" class="px-3 py-2 bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5">
+                            <i class="fa-solid fa-trash-can"></i> Тазалау
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Group Comparison Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    <!-- Experimental Group Summary -->
+                    <div class="bg-gradient-to-br from-indigo-50 to-indigo-100/50 border border-indigo-200 rounded-xl p-4 flex justify-between items-center">
+                        <div>
+                            <span class="text-xs font-bold text-indigo-800 uppercase tracking-wide">Эксперименттік топ</span>
+                            <div class="text-2xl font-black text-indigo-900 mt-1" id="exp-avg-score">0.0 / 30</div>
+                            <p class="text-xs text-indigo-700 mt-0.5" id="exp-count">Оқушы саны: 0</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="inline-block px-3 py-1 bg-indigo-600 text-white text-sm font-extrabold rounded-lg shadow-sm" id="exp-percent">0%</span>
+                            <p class="text-[11px] text-indigo-700 mt-1 font-medium">Орташа меңгеру</p>
+                        </div>
+                    </div>
+
+                    <!-- Control Group Summary -->
+                    <div class="bg-gradient-to-br from-slate-100 to-slate-200/60 border border-slate-300 rounded-xl p-4 flex justify-between items-center">
+                        <div>
+                            <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Бақылау тобы</span>
+                            <div class="text-2xl font-black text-slate-800 mt-1" id="ctrl-avg-score">0.0 / 30</div>
+                            <p class="text-xs text-slate-600 mt-0.5" id="ctrl-count">Оқушы саны: 0</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="inline-block px-3 py-1 bg-slate-700 text-white text-sm font-extrabold rounded-lg shadow-sm" id="ctrl-percent">0%</span>
+                            <p class="text-[11px] text-slate-600 mt-1 font-medium">Орташа меңгеру</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Table -->
+            <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-slate-700 border-collapse">
+                        <thead class="bg-slate-50 text-xs uppercase text-slate-500 border-b font-semibold">
+                            <tr>
+                                <th class="py-3 px-4 w-12 text-center">№</th>
+                                <th class="py-3 px-4">Оқушының аты-жөні</th>
+                                <th class="py-3 px-4">Тобы</th>
+                                <th class="py-3 px-4 text-center">1-тапсырма (/10)</th>
+                                <th class="py-3 px-4 text-center">2-тапсырма (/10)</th>
+                                <th class="py-3 px-4 text-center">3-тапсырма (/10)</th>
+                                <th class="py-3 px-4 text-center">Жалпы балл (/30)</th>
+                                <th class="py-3 px-4 text-center">Деңгей</th>
+                                <th class="py-3 px-4 w-12 text-center"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="results-table-body" class="divide-y divide-slate-100">
+                            <!-- JS dynamic rows -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div id="empty-table-msg" class="text-center py-8 text-slate-400 text-sm">
+                    <i class="fa-solid fa-folder-open text-3xl mb-2 text-slate-300"></i>
+                    <p>Әлі нәтижелер тіркелмеген. Тест тапсырылған соң мұнда көрінеді.</p>
+                </div>
+            </div>
+
+            <!-- Evaluation Criteria Reference Card -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-3">
+                <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Бағалау критерийлері</h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                    <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex items-start gap-2">
+                        <span class="px-2 py-0.5 rounded bg-emerald-600 text-white font-bold">25–30 балл</span>
+                        <div>
+                            <strong class="text-emerald-900 block">Жоғары деңгей</strong>
+                            <span class="text-emerald-800">Оқушының сөздік қоры жақсы қалыптасқан.</span>
+                        </div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 flex items-start gap-2">
+                        <span class="px-2 py-0.5 rounded bg-amber-600 text-white font-bold">18–24 балл</span>
+                        <div>
+                            <strong class="text-amber-900 block">Орташа деңгей</strong>
+                            <span class="text-amber-800">Сөздік қоры орташа деңгейде.</span>
+                        </div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-rose-50 border border-rose-200 flex items-start gap-2">
+                        <span class="px-2 py-0.5 rounded bg-rose-600 text-white font-bold">0–17 балл</span>
+                        <div>
+                            <strong class="text-rose-900 block">Төмен деңгей</strong>
+                            <span class="text-rose-800">Сөздік қорын толықтыру қажет.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        // Data Definitions for Test Items
+        const task1Data = [
+            { id: 1, eng: 'parent', ans: ['ата-ана', 'ата ана', 'ата-анасы'] },
+            { id: 2, eng: 'sister', ans: ['әпке', 'қарындас', 'сіңлі'] },
+            { id: 3, eng: 'student', ans: ['оқушы', 'студент'] },
+            { id: 4, eng: 'lesson', ans: ['сабақ'] },
+            { id: 5, eng: 'notebook', ans: ['дәптер', 'блокнот'] },
+            { id: 6, eng: 'breakfast', ans: ['таңғы ас', 'таңғы ас'] },
+            { id: 7, eng: 'banana', ans: ['банан'] },
+            { id: 8, eng: 'juice', ans: ['шырын', 'сок'] },
+            { id: 9, eng: 'swimming', ans: ['жүзү', 'жүзу', 'жүзу спорты', 'жүзу'] },
+            { id: 10, eng: 'holiday', ans: ['демалыс', 'мереке', 'каникул'] }
+        ];
+
+        const task2Data = [
+            { id: 11, word: 'father', options: ['әке', 'аға', 'ата'], correct: 0 },
+            { id: 12, word: 'library', options: ['асхана', 'кітапхана', 'мектеп'], correct: 1 },
+            { id: 13, word: 'homework', options: ['үй жұмысы', 'сабақ', 'демалыс'], correct: 0 },
+            { id: 14, word: 'early', options: ['кеш', 'ерте', 'баяу'], correct: 1 },
+            { id: 15, word: 'drink', options: ['жеу', 'оқу', 'ішу'], correct: 2 },
+            { id: 16, word: 'strong', options: ['әлсіз', 'мықты', 'кішкентай'], correct: 1 },
+            { id: 17, word: 'flower', options: ['ағаш', 'өзен', 'гүл'], correct: 2 },
+            { id: 18, word: 'rainy', options: ['жаңбырлы', 'шуақты', 'қарлы'], correct: 0 },
+            { id: 19, word: 'drawing', options: ['ән айту', 'сурет салу', 'жүгіру'], correct: 1 },
+            { id: 20, word: 'mountain', options: ['теңіз', 'тау', 'көл'], correct: 1 }
+        ];
+
+        const task3Data = [
+            { num: 21, kaz: 'әке', trans: 'father' },
+            { num: 22, kaz: 'оқушы', trans: 'student' },
+            { num: 23, kaz: 'кітапхана', trans: 'library' },
+            { num: 24, kaz: 'сабақ', trans: 'lesson' },
+            { num: 25, kaz: 'таңғы ас', trans: 'breakfast' },
+            { num: 26, kaz: 'банан', trans: 'banana' },
+            { num: 27, kaz: 'шырын', trans: 'juice' },
+            { num: 28, kaz: 'жүгіру', trans: 'run', altTrans: 'running' },
+            { num: 29, kaz: 'гүл', trans: 'flower' },
+            { num: 30, kaz: 'тау', trans: 'mountain' }
+        ];
+
+        // Speech Synthesis Function
+        function speakWord(word) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Stop any active speech
+                const utterance = new SpeechSynthesisUtterance(word);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.85; // Slightly slower for language learners
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Сіздің браузеріңіз дауыстық дыбыстауды қолдамайды.");
+            }
+        }
+
+        // Render Page Inputs
+        window.addEventListener('DOMContentLoaded', () => {
+            // Set current date
+            document.getElementById('test-date').valueAsDate = new Date();
+
+            // Render Task 1
+            const t1Container = document.getElementById('task1-container');
+            task1Data.forEach(item => {
+                t1Container.innerHTML += `
+                    <div class="flex items-center justify-between gap-2 p-3 bg-slate-50 border rounded-xl">
+                        <div class="flex items-center gap-2">
+                            <button type="button" onclick="speakWord('${item.eng}')" title="Дыбыстау" 
+                                class="text-indigo-600 hover:text-indigo-800 p-1.5 hover:bg-indigo-100 rounded-lg transition-colors">
+                                <i class="fa-solid fa-volume-high"></i>
+                            </button>
+                            <span class="font-bold text-slate-700 text-sm">${item.id}. ${item.eng}</span>
+                        </div>
+                        <input type="text" id="t1_${item.id}" placeholder="аудармасы" required
+                            class="w-1/2 px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                `;
+            });
+
+            // Render Task 2
+            const t2Container = document.getElementById('task2-container');
+            task2Data.forEach(item => {
+                let optsHTML = item.options.map((opt, idx) => {
+                    const letter = String.fromCharCode(65 + idx);
+                    return `
+                        <label class="flex items-center gap-2 p-2 border rounded-lg cursor-pointer hover:bg-indigo-50/50 text-xs font-medium text-slate-700">
+                            <input type="radio" name="t2_${item.id}" value="${idx}" required class="text-indigo-600 focus:ring-indigo-500">
+                            <span><strong>${letter})</strong> ${opt}</span>
+                        </label>
+                    `;
+                }).join('');
+
+                t2Container.innerHTML += `
+                    <div class="p-3 bg-slate-50 border rounded-xl space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-700 text-sm">${item.id}. ${item.word}</span>
+                            <button type="button" onclick="speakWord('${item.word}')" title="Дыбыстау" class="text-indigo-600 hover:text-indigo-800 text-xs">
+                                <i class="fa-solid fa-volume-high"></i>
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-3 gap-1.5">
+                            ${optsHTML}
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Render Task 3
+            const t3Container = document.getElementById('task3-container');
+            task3Data.forEach(item => {
+                t3Container.innerHTML += `
+                    <div class="p-4 bg-slate-50 border rounded-xl space-y-3">
+                        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2">
+                            <span class="font-bold text-slate-800 text-sm">${item.num}. ${item.kaz}</span>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-slate-500">Ағылшынша:</span>
+                                <input type="text" id="t3_trans_${item.num}" placeholder="${item.trans}" required
+                                    class="px-2.5 py-1 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none w-36">
+                            </div>
+                        </div>
+                        <div>
+                            <input type="text" id="t3_sent_${item.num}" placeholder="Сөйлем жазыңыз (мысалы: My ${item.trans} is...)" required
+                                class="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Initial load of dashboard table
+            renderDashboardTable();
+        });
+
+        // Navigation Switcher
+        function switchTab(tab) {
+            const btnTest = document.getElementById('tab-test');
+            const btnDashboard = document.getElementById('tab-dashboard');
+            const viewTest = document.getElementById('view-test');
+            const viewDashboard = document.getElementById('view-dashboard');
+
+            if (tab === 'test') {
+                viewTest.classList.remove('hidden');
+                viewDashboard.classList.add('hidden');
+                btnTest.className = "px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 bg-white text-indigo-900 shadow";
+                btnDashboard.className = "px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 text-indigo-100 hover:text-white";
+            } else {
+                viewTest.classList.add('hidden');
+                viewDashboard.classList.remove('hidden');
+                btnDashboard.className = "px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 bg-white text-indigo-900 shadow";
+                btnTest.className = "px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 text-indigo-100 hover:text-white";
+                renderDashboardTable();
+            }
+        }
+
+        // Quiz Submission & Evaluation
+        function submitQuiz() {
+            const name = document.getElementById('student-name').value.trim();
+            const groupEl = document.querySelector('input[name="student-group"]:checked');
+            if (!name || !groupEl) {
+                alert('Өтініш, оқушының атын және тобын толық таңдаңыз!');
+                return;
+            }
+
+            const group = groupEl.value;
+            let scoreT1 = 0;
+            let scoreT2 = 0;
+            let scoreT3 = 0;
+
+            // Task 1 Evaluation
+            task1Data.forEach(item => {
+                const val = document.getElementById(`t1_${item.id}`).value.trim().toLowerCase();
+                if (item.ans.some(correct => val.includes(correct.toLowerCase()))) {
+                    scoreT1++;
+                }
+            });
+
+            // Task 2 Evaluation
+            task2Data.forEach(item => {
+                const selected = document.querySelector(`input[name="t2_${item.id}"]:checked`);
+                if (selected && parseInt(selected.value) === item.correct) {
+                    scoreT2++;
+                }
+            });
+
+            // Task 3 Evaluation
+            task3Data.forEach(item => {
+                const transVal = document.getElementById(`t3_trans_${item.num}`).value.trim().toLowerCase();
+                const sentVal = document.getElementById(`t3_sent_${item.num}`).value.trim().toLowerCase();
+                
+                const targetWord = item.trans.toLowerCase();
+                const altWord = item.altTrans ? item.altTrans.toLowerCase() : targetWord;
+
+                const isTransCorrect = (transVal === targetWord || transVal === altWord);
+                const isWordInSentence = sentVal.includes(targetWord) || sentVal.includes(altWord);
+                const isSentenceValid = sentVal.length > (targetWord.length + 3); // Basic check for complete sentence
+
+                if (isTransCorrect && isWordInSentence && isSentenceValid) {
+                    scoreT3++;
+                }
+            });
+
+            const totalScore = scoreT1 + scoreT2 + scoreT3;
+
+            // Determine Level
+            let level = '';
+            let description = '';
+            let levelClass = '';
+
+            if (totalScore >= 25) {
+                level = 'Жоғары';
+                description = 'Оқушының сөздік қоры жақсы қалыптасқан.';
+                levelClass = 'bg-emerald-100 text-emerald-800 border-emerald-300';
+            } else if (totalScore >= 18) {
+                level = 'Орташа';
+                description = 'Сөздік қоры орташа деңгейде.';
+                levelClass = 'bg-amber-100 text-amber-800 border-amber-300';
+            } else {
+                level = 'Төмен';
+                description = 'Сөздік қорын толықтыру қажет.';
+                levelClass = 'bg-rose-100 text-rose-800 border-rose-300';
+            }
+
+            // Show Result Summary
+            document.getElementById('res-t1').innerText = `${scoreT1} / 10`;
+            document.getElementById('res-t2').innerText = `${scoreT2} / 10`;
+            document.getElementById('res-t3').innerText = `${scoreT3} / 10`;
+            document.getElementById('res-total').innerText = `${totalScore} / 30`;
+            
+            const lvlTag = document.getElementById('res-level-tag');
+            lvlTag.innerText = level;
+            lvlTag.className = `px-3 py-1 rounded-full text-xs font-bold border ${levelClass}`;
+            
+            document.getElementById('res-description').innerText = description;
+
+            document.getElementById('quiz-form').classList.add('hidden');
+            document.getElementById('result-modal').classList.remove('hidden');
+
+            // Save Result to LocalStorage
+            saveResult({
+                id: Date.now(),
+                name: name,
+                group: group,
+                t1: scoreT1,
+                t2: scoreT2,
+                t3: scoreT3,
+                total: totalScore,
+                level: level
+            });
+        }
+
+        function resetTest() {
+            document.getElementById('quiz-form').reset();
+            document.getElementById('quiz-form').classList.remove('hidden');
+            document.getElementById('result-modal').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // LocalStorage & Dashboard Logic
+        function getSavedResults() {
+            return JSON.parse(localStorage.getItem('english_experiment_results') || '[]');
+        }
+
+        function saveResult(data) {
+            const results = getSavedResults();
+            results.push(data);
+            localStorage.setItem('english_experiment_results', JSON.stringify(results));
+        }
+
+        function deleteResult(id) {
+            let results = getSavedResults();
+            results = results.filter(item => item.id !== id);
+            localStorage.setItem('english_experiment_results', JSON.stringify(results));
+            renderDashboardTable();
+        }
+
+        function clearResults() {
+            if (confirm('Бүкіл нәтижелерді жойғыңыз келе ме?')) {
+                localStorage.removeItem('english_experiment_results');
+                renderDashboardTable();
+            }
+        }
+
+        function addSampleData() {
+            const samples = [
+                { id: 1, name: 'Арман Қайратов', group: 'Эксперименттік топ', t1: 9, t2: 10, t3: 8, total: 27, level: 'Жоғары' },
+                { id: 2, name: 'Аружан Серікова', group: 'Эксперименттік топ', t1: 10, t2: 9, t3: 9, total: 28, level: 'Жоғары' },
+                { id: 3, name: 'Данияр Нұрланов', group: 'Эксперименттік топ', t1: 8, t2: 8, t3: 8, total: 24, level: 'Орташа' },
+                { id: 4, name: 'Динара Әлібекова', group: 'Бақылау тобы', t1: 6, t2: 7, t3: 5, total: 18, level: 'Орташа' },
+                { id: 5, name: 'Ерасыл Болатов', group: 'Бақылау тобы', t1: 5, t2: 6, t3: 4, total: 15, level: 'Төмен' },
+                { id: 6, name: 'Мадияр Оспанов', group: 'Бақылау тобы', t1: 7, t2: 6, t3: 6, total: 19, level: 'Орташа' }
+            ];
+            localStorage.setItem('english_experiment_results', JSON.stringify(samples));
+            renderDashboardTable();
+        }
+
+        function renderDashboardTable() {
+            const results = getSavedResults();
+            const tbody = document.getElementById('results-table-body');
+            const emptyMsg = document.getElementById('empty-table-msg');
+
+            tbody.innerHTML = '';
+
+            if (results.length === 0) {
+                emptyMsg.classList.remove('hidden');
+            } else {
+                emptyMsg.classList.add('hidden');
+            }
+
+            // Calculations for summary stats
+            let expTotal = 0, expCount = 0;
+            let ctrlTotal = 0, ctrlCount = 0;
+
+            results.forEach((item, index) => {
+                if (item.group === 'Эксперименттік топ') {
+                    expTotal += item.total;
+                    expCount++;
+                } else {
+                    ctrlTotal += item.total;
+                    ctrlCount++;
+                }
+
+                let badgeColor = 'bg-slate-100 text-slate-700';
+                if (item.level === 'Жоғары') badgeColor = 'bg-emerald-100 text-emerald-800';
+                else if (item.level === 'Орташа') badgeColor = 'bg-amber-100 text-amber-800';
+                else if (item.level === 'Төмен') badgeColor = 'bg-rose-100 text-rose-800';
+
+                const groupBadge = item.group === 'Эксперименттік топ' 
+                    ? '<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-100 text-indigo-800">Эксперименттік</span>'
+                    : '<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-100 text-slate-700">Бақылау</span>';
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="py-3 px-4 text-center font-bold text-slate-400 text-xs">${index + 1}</td>
+                        <td class="py-3 px-4 font-semibold text-slate-800">${item.name}</td>
+                        <td class="py-3 px-4">${groupBadge}</td>
+                        <td class="py-3 px-4 text-center text-slate-600">${item.t1}</td>
+                        <td class="py-3 px-4 text-center text-slate-600">${item.t2}</td>
+                        <td class="py-3 px-4 text-center text-slate-600">${item.t3}</td>
+                        <td class="py-3 px-4 text-center font-bold text-indigo-700">${item.total}</td>
+                        <td class="py-3 px-4 text-center">
+                            <span class="px-2.5 py-1 rounded-full text-xs font-bold ${badgeColor}">${item.level}</span>
+                        </td>
+                        <td class="py-3 px-4 text-center">
+                            <button onclick="deleteResult(${item.id})" title="Өшіру" class="text-slate-400 hover:text-rose-600 transition-colors">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            // Update Summaries
+            const expAvg = expCount > 0 ? (expTotal / expCount) : 0;
+            const expPercent = ((expAvg / 30) * 100).toFixed(1);
+
+            const ctrlAvg = ctrlCount > 0 ? (ctrlTotal / ctrlCount) : 0;
+            const ctrlPercent = ((ctrlAvg / 30) * 100).toFixed(1);
+
+            document.getElementById('exp-avg-score').innerText = `${expAvg.toFixed(1)} / 30`;
+            document.getElementById('exp-count').innerText = `Оқушы саны: ${expCount}`;
+            document.getElementById('exp-percent').innerText = `${expPercent}%`;
+
+            document.getElementById('ctrl-avg-score').innerText = `${ctrlAvg.toFixed(1)} / 30`;
+            document.getElementById('ctrl-count').innerText = `Оқушы саны: ${ctrlCount}`;
+            document.getElementById('ctrl-percent').innerText = `${ctrlPercent}%`;
+        }
+
+        function exportCSV() {
+            const results = getSavedResults();
+            if (results.length === 0) {
+                alert('Экспорттау үшін деректер жоқ!');
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; // UTF-8 BOM for Excel
+            csvContent += "№,Оқушы,Тобы,1-тапсырма,2-тапсырма,3-тапсырма,Жалпы балл,Деңгей\n";
+
+            results.forEach((item, idx) => {
+                csvContent += `"${idx + 1}","${item.name}","${item.group}","${item.t1}","${item.t2}","${item.t3}","${item.total}","${item.level}"\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "Experiment_Results_30Days.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
